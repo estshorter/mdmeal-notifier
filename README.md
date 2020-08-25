@@ -31,7 +31,7 @@
 ## コマンドライン引数
 ``` ps1
 PS > .\mdmeal-notifier.exe -h 
-Usage of C:\Users\thund\Documents\src\mdmeal\mdmeal-notifier.exe:
+Usage of mdmeal-notifier.exe:
   -line
         use LINE Notify (default true)
 ```
