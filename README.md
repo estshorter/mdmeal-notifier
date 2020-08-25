@@ -22,7 +22,7 @@
 	"appID": "{1AC14E77-02E7-4E5D-B744-2EB1AE5198B7}\\notepad.exe"
 }
 ```
-のようなファイルを作る。`lineNotifyToken`は https://qiita.com/ken_yoshi/items/7879b3117d298a143101 などを参考に作れるが、
+のようなファイルを作る。`lineNotifyToken`は https://qiita.com/ken_yoshi/items/7879b3117d298a143101 などを参考に生成、入力すればよいが、
 アプリ起動時に`-line=false`と指定すれば不要。このときはWin10の通知機能が使用される。
 
 次に、`mdmeal-notifer.exe PATH_TO_JSON` とすれば起動できる。`triggerMenus`のいずれかがメニューにある時はLINE or Win10に通知される。
