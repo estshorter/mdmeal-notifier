@@ -1,4 +1,4 @@
-# mdmeal
+# mdmeal-notifier
 天津飯とかのマズメシが出そうになったらLINE or Win10トーストに通知できる。
 
 ## 動作環境
