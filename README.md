@@ -23,7 +23,7 @@
 }
 ```
 のようなファイルを作る。`lineNotifyToken`は https://qiita.com/ken_yoshi/items/7879b3117d298a143101 などを参考に作れるが、
-なくてもアプリ起動時に`-line=false`と指定すれば不要。このときはWin10の通知機能が使用される。
+アプリ起動時に`-line=false`と指定すれば不要。このときはWin10の通知機能が使用される。
 
 次に、`mdmeal-notifer.exe PATH_TO_JSON` とすれば起動できる。`triggerMenus`のいずれかがメニューにある時はLINE or Win10に通知される。
 コマンドライン引数が与えられていない場合は、カレントディレクトリの`configs.json`を読もうとする。
