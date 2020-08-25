@@ -7,7 +7,7 @@
 - [ChromeDriver](https://chromedriver.chromium.org/)
 
 ## 使い方
-まず、同じフォルダに`configs.json`として
+まず、本ソフトのexeファイルがあるフォルダに`configs.json`として
 ``` json
 {
 	"triggerMenus": [
