@@ -117,8 +117,7 @@ func scrape(html io.Reader) ([]Menu, error) {
 	}
 	menuNames := make([]string, orderHTML.Length())
 	orderHTML.Each(func(idx int, s *goquery.Selection) {
-		trimmed := strings.TrimSpace(s.Text())
-		menuNames[idx] = trimmed
+		menuNames[idx] = strings.TrimSpace(s.Text())
 	})
 	dateHTML := doc.Find("table#gvOrder > tbody > tr:nth-child(n+1) > td:nth-child(1)")
 	menuDates := make([]string, dateHTML.Length())
