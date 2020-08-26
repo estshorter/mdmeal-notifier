@@ -11,7 +11,8 @@
 ``` json
 {
 	"triggerMenus": [
-		"天津飯"
+		"天津飯",
+		"うどん"
 	],
 	"mdmealURL": "OUR_MDMEAL_LOGIN_URL",
 	"mdmealAcount": {
