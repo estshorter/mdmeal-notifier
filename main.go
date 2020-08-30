@@ -228,6 +228,6 @@ func main() {
 		}
 	}
 	if !notified {
-		fmt.Println("Finished without Notifications")
+		fmt.Println("Finished without notifications")
 	}
 }
