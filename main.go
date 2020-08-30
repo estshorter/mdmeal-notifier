@@ -56,13 +56,17 @@ func readConfigs(path string) (*Configs, error) {
 }
 
 func downloadMenu(mdmealURL string, user *User) (io.Reader, error) {
-	options := agouti.ChromeOptions(
+	chromeArgs := agouti.ChromeOptions(
 		"args", []string{
 			"--headless",
 			"--disable-gpu",
 		})
+	chromeExcludeSwitches := agouti.ChromeOptions(
+		"excludeSwitches", []string{
+			"enable-logging",
+		})
 
-	driver := agouti.ChromeDriver(options)
+	driver := agouti.ChromeDriver(chromeArgs, chromeExcludeSwitches)
 	defer driver.Stop()
 	if err := driver.Start(); err != nil {
 		return nil, err
