@@ -15,7 +15,6 @@ import (
 	"time"
 
 	"github.com/PuerkitoBio/goquery"
-	"github.com/go-toast/toast"
 	"github.com/sclevine/agouti"
 )
 
@@ -143,15 +142,6 @@ func loadHTMLFromFile(cacheFilePath string) (io.Reader, error) {
 	return bytes.NewReader(content), err
 }
 
-func notifyToWin10(msg, appID string) error {
-	notification := toast.Notification{
-		AppID:   appID,
-		Title:   "M-Dmeal",
-		Message: msg,
-	}
-	return notification.Push()
-}
-
 func notifyToLINE(msg, token string) error {
 	values := url.Values{}
 	values.Add("message", msg)
@@ -185,7 +175,6 @@ func notifyErrorAndExit(err error, notify Notification) {
 func main() {
 	var notify Notification
 	var configFilePath string
-	useLINENotifyPtr := flag.Bool("line", true, "use LINE Notify")
 
 	flag.Parse()
 	if len(flag.Args()) == 1 {
@@ -198,11 +187,7 @@ func main() {
 		log.Fatalln(err)
 	}
 
-	if *useLINENotifyPtr {
-		notify = func(msg string) error { return notifyToLINE(msg, configs.LINENotifyToken) }
-	} else {
-		notify = func(msg string) error { return notifyToWin10(msg, configs.AppID) }
-	}
+	notify = func(msg string) error { return notifyToLINE(msg, configs.LINENotifyToken) }
 	fmt.Println("Downloading html...")
 	html, err := downloadMenu(configs.MDmealURL, &configs.MDmealAccount)
 	if err != nil {
