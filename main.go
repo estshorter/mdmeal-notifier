@@ -81,9 +81,11 @@ func downloadMenu(mdmealURL string, user *User) (io.Reader, error) {
 	if err := page.Session().SetPageLoad(3000); err != nil {
 		return nil, err
 	}
+	fmt.Println("Opening the welcome page...")
 	if err := page.Navigate(mdmealURL); err != nil {
 		return nil, err
 	}
+	fmt.Println("Logging in...")
 	if err := page.FindByID("txtLoginId").SendKeys(user.ID); err != nil {
 		return nil, err
 	}
@@ -94,11 +96,13 @@ func downloadMenu(mdmealURL string, user *User) (io.Reader, error) {
 		return nil, err
 	}
 
+	fmt.Println("Opening the menu page...")
 	time.Sleep(time.Millisecond * 100)
 	if err := page.FindByID("ibOrder").Click(); err != nil {
 		return nil, err
 	}
 
+	fmt.Println("Downloading menus...")
 	time.Sleep(time.Millisecond * 100)
 	page.FindByID("gvOrder")
 
