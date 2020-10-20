@@ -24,7 +24,7 @@ type Configs struct {
 	MDmealURL       string   `json:"mdmealURL"`
 	MDmealAccount   User     `json:"mdmealAcount"`
 	LINENotifyToken string   `json:"lineNotifyToken"`
-	AppID           string   `json:"appID"`
+	string          `json:"appID"`
 }
 
 // User defines user info at mdmeal
