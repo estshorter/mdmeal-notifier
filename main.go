@@ -24,6 +24,7 @@ type Configs struct {
 	MDmealURL       string   `json:"mdmealURL"`
 	MDmealAccount   User     `json:"mdmealAcount"`
 	LINENotifyToken string   `json:"lineNotifyToken"`
+	MaxRetryCount   int      `json:"maxRetryCount"`
 }
 
 // User defines user info at mdmeal
@@ -36,6 +37,18 @@ type User struct {
 type Menu struct {
 	Name string
 	Date string
+}
+
+type retryableErr struct {
+	err error
+}
+
+func (e *retryableErr) Error() string {
+	return e.err.Error()
+}
+
+func (e *retryableErr) UnWrap() error {
+	return e.err
 }
 
 // Notification defines type of a notify function
@@ -98,7 +111,7 @@ func downloadMenu(mdmealURL string, user *User) (io.Reader, error) {
 	fmt.Println("Opening the menu page...")
 	time.Sleep(time.Millisecond * 100)
 	if err := page.FindByID("ibOrder").Click(); err != nil {
-		return nil, err
+		return nil, &retryableErr{err}
 	}
 
 	fmt.Println("Downloading menus...")
@@ -140,10 +153,10 @@ func scrape(html io.Reader) ([]Menu, error) {
 	return menus, nil
 }
 
-func loadHTMLFromFile(cacheFilePath string) (io.Reader, error) {
-	content, err := ioutil.ReadFile(cacheFilePath)
-	return bytes.NewReader(content), err
-}
+// func loadHTMLFromFile(cacheFilePath string) (io.Reader, error) {
+// 	content, err := ioutil.ReadFile(cacheFilePath)
+// 	return bytes.NewReader(content), err
+// }
 
 func notifyToLINE(msg, token string) error {
 	values := url.Values{}
@@ -192,10 +205,22 @@ func main() {
 
 	notify = func(msg string) error { return notifyToLINE(msg, configs.LINENotifyToken) }
 	fmt.Println("Downloading html...")
-	html, err := downloadMenu(configs.MDmealURL, &configs.MDmealAccount)
-	if err != nil {
-		notifyErrorAndExit(err, notify)
+
+	var html io.Reader
+	for cnt := 0; cnt < configs.MaxRetryCount; cnt++ {
+		var errRetryable *retryableErr
+		html, err = downloadMenu(configs.MDmealURL, &configs.MDmealAccount)
+		if err == nil {
+			break
+		}
+		if ok := errors.As(err, &errRetryable); !ok || cnt == configs.MaxRetryCount-1 {
+			notifyErrorAndExit(err, notify)
+		} else {
+			fmt.Println("Retry after 3 seconds")
+			time.Sleep(time.Second * 3)
+		}
 	}
+
 	fmt.Println("Scraping html...")
 	menus, err := scrape(html)
 	if err != nil {

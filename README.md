@@ -20,6 +20,7 @@
 		"password": "YOUR_PASS"
 	},
 	"lineNotifyToken": "YOUR_TOKEN",
+	"maxRetryCount": 5
 }
 ```
 のようなファイルを作る。`lineNotifyToken`は https://qiita.com/ken_yoshi/items/7879b3117d298a143101 などを参考に生成すればよい。
