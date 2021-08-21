@@ -99,19 +99,19 @@ func downloadMenu(mdmealURL string, user *User) (io.Reader, error) {
 	}
 	fmt.Println("Logging in...")
 	if err := page.FindByID("txtLoginId").SendKeys(user.ID); err != nil {
-		return nil, err
+		return nil, &retryableErr{err}
 	}
 	if err := page.FindByID("txtPassword").SendKeys(user.Password); err != nil {
-		return nil, err
+		return nil, &retryableErr{err}
 	}
 	if err := page.FindByID("ibLogin").Click(); err != nil {
-		return nil, err
+		return nil, &retryableErr{err}
 	}
 
 	fmt.Println("Opening the menu page...")
 	time.Sleep(time.Millisecond * 100)
 	if err := page.FindByID("ibOrder").Click(); err != nil {
-		return nil, &retryableErr{err}
+		return nil, err
 	}
 
 	fmt.Println("Downloading menus...")
