@@ -8,8 +8,8 @@ require (
 )
 
 require (
-	github.com/andybalholm/cascadia v1.2.0 // indirect
-	github.com/onsi/ginkgo v1.16.4 // indirect
+	github.com/andybalholm/cascadia v1.3.1 // indirect
+	github.com/onsi/ginkgo v1.16.5 // indirect
 	github.com/onsi/gomega v1.16.0 // indirect
-	golang.org/x/net v0.0.0-20210614182718-04defd469f4e // indirect
+	golang.org/x/net v0.0.0-20211020060615-d418f374d309 // indirect
 )
